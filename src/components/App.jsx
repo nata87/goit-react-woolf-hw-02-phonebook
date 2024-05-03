@@ -7,6 +7,7 @@ class App extends Component {
   state = {
     contacts: [],
     name: '',
+    number: '',
   };
 
   handleChange = e => {
@@ -17,27 +18,32 @@ class App extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { name, contacts } = this.state;
+    const { name, contacts, number } = this.state;
     if (name.trim() === '') return;
     const newContact = {
-      id: nanoid(), // Генеруємо унікальний id за допомогою пакету nanoid
+      id: nanoid(),
       name: name.trim(),
+      number: number.trim(),
     };
     this.setState({
-      contacts: [...contacts, newContact], // Додаємо новий контакт до списку
-      name: '', // Очищуємо поле вводу імені
+      contacts: [...contacts, newContact],
+      name: '',
+      number: '',
     });
   };
 
   render() {
-    const { name, contacts } = this.state;
+    const { name, contacts, number } = this.state;
     return (
       <div>
+        <p>Phonebook</p>
         <AddContactForm
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
           name={name}
+          number={number}
         />
+        <p>Contacts</p>
         <ContactList contacts={contacts} />
       </div>
     );
