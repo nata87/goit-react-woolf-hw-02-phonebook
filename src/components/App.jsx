@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
 import AddContactForm from './addContactForm/addContactForm';
 import ContactList from './contactList/contactList';
+import Filter from './filter/filter';
 
 class App extends Component {
   state = {
     contacts: [],
+    filter: '',
     name: '',
     number: '',
   };
@@ -32,8 +34,15 @@ class App extends Component {
     });
   };
 
+  getFilteredContacts = () => {
+    const { contacts, filter } = this.state;
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
+
   render() {
-    const { name, contacts, number } = this.state;
+    const { name, contacts, number, filter } = this.state;
     return (
       <div>
         <p>Phonebook</p>
@@ -44,7 +53,8 @@ class App extends Component {
           number={number}
         />
         <p>Contacts</p>
-        <ContactList contacts={contacts} />
+        <Filter filter={filter} handleChange={this.handleChange} />
+        <ContactList contacts={this.getFilteredContacts()} />
       </div>
     );
   }
