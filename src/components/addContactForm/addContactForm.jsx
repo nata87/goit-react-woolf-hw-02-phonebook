@@ -1,4 +1,4 @@
-import { Component, useState } from 'react';
+import { Component } from 'react';
 import styles from './addContactForm.module.css';
 import { nanoid } from 'nanoid';
 
