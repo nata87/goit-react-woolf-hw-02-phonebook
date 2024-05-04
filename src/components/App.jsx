@@ -29,11 +29,11 @@ class App extends Component {
   };
 
   render() {
-    const { filter } = this.state;
+    const { filter, contacts } = this.state;
     return (
       <div>
         <h1>Phonebook</h1>
-        <AddContactForm setContacts={this.setContacts} />
+        <AddContactForm setContacts={this.setContacts} contacts={contacts} />
         <p>Contacts</p>
         <Filter filter={filter} handleChange={this.handleChange} />
         <ContactList contacts={this.getFilteredContacts()} />

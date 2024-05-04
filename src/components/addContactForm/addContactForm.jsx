@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styles from './addContactForm.module.css';
 import { nanoid } from 'nanoid';
 
-const AddContactForm = ({ setContacts }) => {
+const AddContactForm = ({ contacts, setContacts }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const handleSubmit = e => {
@@ -13,7 +13,17 @@ const AddContactForm = ({ setContacts }) => {
       name: name,
       number: number,
     };
-    setContacts(newContact);
+    if (
+      contacts.some(
+        contact => contact.name.toLowerCase() === name.trim().toLowerCase()
+      )
+    ) {
+      alert(`${name} is already in contacts`);
+      return;
+    } else {
+      setContacts(newContact);
+    }
+
     setName('');
     setNumber('');
   };
