@@ -23,9 +23,18 @@ class App extends Component {
 
   getFilteredContacts = () => {
     const { contacts, filter } = this.state;
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
-    );
+    return contacts.length
+      ? contacts.filter(contact =>
+          contact.name.toLowerCase().includes(filter.toLowerCase())
+        )
+      : contacts;
+  };
+
+  deleteContact = deletedId => {
+    const { contacts } = this.state;
+    this.setState({
+      contacts: contacts.filter(({ id }) => deletedId !== id),
+    });
   };
 
   render() {
@@ -34,9 +43,12 @@ class App extends Component {
       <div>
         <h1>Phonebook</h1>
         <AddContactForm setContacts={this.setContacts} contacts={contacts} />
-        <p>Contacts</p>
+        <h2>Contacts</h2>
         <Filter filter={filter} handleChange={this.handleChange} />
-        <ContactList contacts={this.getFilteredContacts()} />
+        <ContactList
+          contacts={this.getFilteredContacts()}
+          deleteContact={this.deleteContact}
+        />
       </div>
     );
   }
