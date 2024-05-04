@@ -3,16 +3,26 @@ import AddContactForm from './addContactForm/addContactForm';
 import ContactList from './contactList/contactList';
 import Filter from './filter/filter';
 
-class App extends Component {
+export class App extends Component {
   state = {
     contacts: [],
     filter: '',
   };
 
   setContacts = newContact => {
-    this.setState({
-      contacts: [...this.state.contacts, newContact],
-    });
+    if (
+      this.state.contacts.some(
+        contact =>
+          contact.name.toLowerCase() === newContact.name.trim().toLowerCase()
+      )
+    ) {
+      alert(`${newContact.name} is already in contacts`);
+      return;
+    } else {
+      this.setState({
+        contacts: [...this.state.contacts, newContact],
+      });
+    }
   };
 
   handleChange = e => {
@@ -38,11 +48,11 @@ class App extends Component {
   };
 
   render() {
-    const { filter, contacts } = this.state;
+    const { filter } = this.state;
     return (
       <div>
         <h1>Phonebook</h1>
-        <AddContactForm setContacts={this.setContacts} contacts={contacts} />
+        <AddContactForm setContacts={this.setContacts} />
         <h2>Contacts</h2>
         <Filter filter={filter} handleChange={this.handleChange} />
         <ContactList
@@ -53,5 +63,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;
