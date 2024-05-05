@@ -8,19 +8,10 @@ class AddContactForm extends Component {
     number: '',
   };
 
-  setName(name) {
+  setContact(key, value) {
     this.setState(prev => {
       return {
-        ...prev,
-        name,
-      };
-    });
-  }
-  setNumber(number) {
-    this.setState(prev => {
-      return {
-        ...prev,
-        number,
+        [key]: value,
       };
     });
   }
@@ -38,8 +29,8 @@ class AddContactForm extends Component {
     };
     setContacts(newContact);
 
-    this.setName('');
-    this.setNumber('');
+    this.setContact('name', '');
+    this.setContact('number', '');
   };
 
   render() {
@@ -54,7 +45,7 @@ class AddContactForm extends Component {
           type="text"
           name="name"
           value={name}
-          onChange={({ target }) => this.setName(target.value)}
+          onChange={({ target }) => this.setContact('name', target.value)}
           pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
@@ -67,7 +58,7 @@ class AddContactForm extends Component {
           type="tel"
           name="number"
           value={number}
-          onChange={({ target }) => this.setNumber(target.value)}
+          onChange={({ target }) => this.setContact('number', target.value)}
           pattern="\+?\d{1,4}?[\-.\s]?\(?\d{1,3}?\)?[\-.\s]?\d{1,4}[\-.\s]?\d{1,4}[\-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
